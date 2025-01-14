@@ -4,6 +4,7 @@
 The Smart BMS IoT Project aims to automate climate control in Brew Management Systems to ensure a healthy and optimal environment for the birds. Using a combination of temperature, humidity, and ammonia sensors, the system automatically adjusts the farm's conditions. The Django server enables farmers to monitor and control these parameters remotely.
 
 ## 2. Problem Statement
+read sensors in a remote location via
 
 ## 3. System Overview
 The system comprises hardware and software components that work together to monitor and control the environment of a BMS. Farmers interact with the system through a web interface where they can monitor live data and set thresholds.
