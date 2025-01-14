@@ -1,0 +1,91 @@
+1. Create environment:
+python3 -m venv env
+
+2. Activate environment:
+source env/bin/activate
+(it is case sensitive)
+
+3.Install pillow:
+pip install django pillow
+
+4.Create project:
+django-admin startproject LetsShop
+But this would be a mistake. We need the manage.py file inside the env folder. So, instead,we are gonna input this command:
+django-admin startproject LetsShop .
+(With a dot after a space)
+
+5.Create Apps:
+python3 manage.py startapp LetsShop_App
+This app will handle all the main stuff
+python3 manage.py startapp LetsShop_Accounts
+This app will handle all the login registration stuff.
+
+6.Migration:
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+7. Create superuser:
+python3 manage.py createsuperuser
+
+8.Install Jazzmin:
+pip install -U django-jazzmin
+
+Add jazzmin to your INSTALLED_APPS before django.contrib.admin
+
+INSTALLED_APPS = [
+    'jazzmin',
+
+    'django.contrib.admin',
+    [...]
+]
+
+9. Add your apps to your project's settings.py:
+INSTALLED_APPS = [
+    'jazzmin',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'LetsShop_App',
+    'LetsShop_Accounts',
+]
+
+10. Run the server:
+python3 manage.py runserver
+
+Go to http://127.0.0.1:8000/admin and see for yourself!
+
+11. Update your settings.py accordingly:
+
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+STATICFILES_DIRS = [BASE_DIR / 'static', ]
+MEDIA_ROOT = BASE_DIR / 'media'
+
+in Project urls.py:
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+12.Create new urls.py files in every apps directory.
+add this code in apps urls.py files:
+
+from django.urls import path
+urlpatterns=[
+
+]
+
+13.Add your apps urls into projects urls.py:
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('accounts/',include(LetsShop_Accounts.urls)),
+    path('',include(LetsShop_App.urls)),
+]
+
+14. create a new repository and commit: 

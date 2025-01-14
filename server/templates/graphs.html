@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data Graphs</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+        }
+
+        canvas {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="mt-5 mb-4 text-primary">Sensor Data Graphs</h1>
+        </div>
+
+        <!-- Row for Temperature Graph -->
+        <div class="row chart-container justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Temperature (ºC)</h5>
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row for Humidity Graph -->
+        <div class="row chart-container justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Humidity (%)</h5>
+                        <canvas id="humidityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row for Gas Sensor Graph -->
+        <div class="row chart-container justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Gas Sensor (ppm)</h5>
+                        <canvas id="gasSensorChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript to Render Charts -->
+    <script>
+        // Data passed from Django to the template
+        const timestamps = {{ timestamps|safe }};
+        const temperatures = {{ temperature|safe }};
+        const humidity = {{ humidity|safe }};
+        const gasSensor = {{ gas_sensor|safe }};
+
+        // Create temperature chart
+        const temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+        new Chart(temperatureCtx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Temperature (ºC)',
+                    data: temperatures,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Temperature (ºC)' } }
+                }
+            }
+        });
+
+        // Create humidity chart
+        const humidityCtx = document.getElementById('humidityChart').getContext('2d');
+        new Chart(humidityCtx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Humidity (%)',
+                    data: humidity,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Humidity (%)' } }
+                }
+            }
+        });
+
+        // Create gas sensor chart
+        const gasSensorCtx = document.getElementById('gasSensorChart').getContext('2d');
+        new Chart(gasSensorCtx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Gas Sensor (ppm)',
+                    data: gasSensor,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: 'Gas Sensor (ppm)' } }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

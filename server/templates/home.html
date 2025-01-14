@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Django App</title>
+    
+    <!-- Load Bootstrap CSS from CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Load static template tag -->
+    {% load static %}
+
+    <!-- Custom styles if needed -->
+    <style>
+        .meter {
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        .meter-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="mt-5">
+            <h1>Welcome to My Django App</h1>
+            <p>Your one-stop solution for [your app's purpose].</p>
+        </header>
+
+        <section class="mt-5">
+            <h2>Environmental Meters</h2>
+
+            <!-- Temperature Meter -->
+            <div class="meter-label">Temperature</div>
+            <div class="progress meter">
+                <div id="temperatureMeter" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0°C</div>
+            </div>
+
+            <!-- Humidity Meter -->
+            <div class="meter-label">Humidity</div>
+            <div class="progress meter">
+                <div id="humidityMeter" class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load Bootstrap JS and jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to update the meters -->
+    <script>
+        // Function to update the temperature meter
+        function updateTemperature(value) {
+            var temperatureMeter = document.getElementById('temperatureMeter');
+            temperatureMeter.style.width = value + '%';
+            temperatureMeter.setAttribute('aria-valuenow', value);
+            temperatureMeter.innerHTML = value + '°C';
+        }
+
+        // Function to update the humidity meter
+        function updateHumidity(value) {
+            var humidityMeter = document.getElementById('humidityMeter');
+            humidityMeter.style.width = value + '%';
+            humidityMeter.setAttribute('aria-valuenow', value);
+            humidityMeter.innerHTML = value + '%';
+        }
+
+        // Example: Simulate real-time updates
+        setInterval(function() {
+            var tempValue = Math.floor(Math.random() * 100);  // Simulate temperature between 0-100°C
+            var humidityValue = Math.floor(Math.random() * 100);  // Simulate humidity between 0-100%
+            updateTemperature(tempValue);
+            updateHumidity(humidityValue);
+        }, 2000);  // Update every 2 seconds
+    </script>
+</body>
+</html>
